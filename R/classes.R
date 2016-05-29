@@ -10,7 +10,7 @@ setClass("bdMatrix",
            if(!is.list(object@listOfBlocks)) 
              invalids <- "listOfBlocks must be a list."
            
-           if(!all(sapply(object@listOfBlocks, function(x) is.numeric(x)))) 
+           if(!all(sapply(object@listOfBlocks, function(x) is.numeric(x) | is(x, "Matrix")))) 
              invalids <- c(invalids, "listOfBlocks must only contain matrices and vectors.")
            
            if(length(invalids)) invalids else TRUE

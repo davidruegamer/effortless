@@ -13,3 +13,6 @@ setMethod("*", signature(e1="kroneckersumBlockMatrix", e2="numeric"),
           }
 )
 
+
+setMethod("nrow", c("kroneckersumBlockMatrix"),
+          function(x) nrow(x@matLeft) * nrow(x@matRight))

@@ -38,7 +38,7 @@ setMethod("[[", c("bdMatrix"),
           function(x, i, ...)
           {
             
-            bdMatrix(x@listOfBlocks[[i]])
+            x@listOfBlocks[[i]]
             
           }
 )
@@ -64,7 +64,7 @@ setMethod("%*%", signature(x = "bdMatrix", y = "bdMatrix"),
           function(x, y)
           {
             
-            if( length(unique(c(sapply(x, NCOL), sapply(y, NROW)))) != 1 )
+            if( length(unique(c(sapply(x@listOfBlocks, NCOL), sapply(y@listOfBlocks, NROW)))) != 1 )
               stop("Multiplication only implemented if all blocks have matching sizes.")
             bdMatrix(lapply(1:length(x), function(i) x[[i]] %*% y[[i]]))
             
@@ -77,15 +77,18 @@ setMethod("chol", signature(x="bdMatrix"),
             
           } )
 
-setMethod("svd", signature(x="bdMatrix"),
-          function(x, nu = min(nrow(x), p = ncol(x)), nv = min(nrow(x), p = ncol(x))) {
-            
-            res <- mclapply(x@listOfBlocks, function(y) svd(y, nu, nv))
-            list(d = unlist(sapply(res,"[[","d")),
-                 u = bdiag(lapply(res,"[[","u")),
-                 v = bdiag(lapply(res,"[[","v")))
-            
-          } )
+setGeneric("svd")
+
+svd.bdMatrix <- function(x, nu = min(nrow(x), p = ncol(x)), nv = min(nrow(x), p = ncol(x))) {
+  
+  res <- mclapply(x@listOfBlocks, function(y) svd(y, nu, nv))
+  list(d = unlist(lapply(res,"[[","d")),
+       u = bdiag(lapply(res,"[[","u")),
+       v = bdiag(lapply(res,"[[","v")))
+  
+}
+
+setMethod("svd", signature(x="bdMatrix"), svd.bdMatrix)
 
 setMethod("forceSymmetric", c("bdMatrix"),
           function(x)

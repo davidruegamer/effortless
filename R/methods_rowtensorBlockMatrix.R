@@ -29,8 +29,8 @@ setMethod("crossprod", signature(x="rowtensorBlockMatrix", y="rowtensorBlockMatr
             warning("Method crossprod for signature rowtensorBlockMatrix,rowtensorBlockMatrix does only work if x is a multiple of y.")
             
             bdMatrix(mclapply(1:ncol(x@matLeft), function(i)
-              crossprod(x@matLeft[x@matLeft[,i]!=0,i] * x@matRight[x@matLeft[,i]!=0,],
-                        y@matLeft[x@matLeft[,i]!=0,i] * y@matRight[x@matLeft[,i]!=0,])
+              crossprod(x@matLeft[[i]] * x@matRight,
+                        y@matLeft[[i]] * y@matRight)
             ))
             
           } )
@@ -63,3 +63,17 @@ setMethod("*", signature(e1="rowtensorBlockMatrix", e2="numeric"),
 
 setMethod("dim", c("rowtensorBlockMatrix"),
           function(x) c(nrow(x@matRight),length(x@matLeft)*ncol(x@matRight)))
+
+setGeneric("rankMatrix")
+
+rankMatrix.rowtensorBlockMatrix <- function(x, tol = NULL,
+                                            method = c("tolNorm2", "qr.R", "qrLINPACK", "qr",
+                                                       "useGrad", "maybeGrad"),
+                                            sval = svd(x, 0, 0)$d, warn.t = TRUE) 
+{
+  
+  ncol(x@matLeft)*rankMatrix(x@matRight, tol = tol, method = method, sval = sval, warn.t = warn.t)
+  
+} 
+
+setMethod("rankMatrix", signature(x="rowtensorBlockMatrix"), rankMatrix.rowtensorBlockMatrix)

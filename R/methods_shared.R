@@ -8,11 +8,22 @@ setMethod("crossprod", signature(x="bdMatrix", y="kroneckersumBlockMatrix"),
               stop("crossprod for bdMatrix and kroneckersumBlockMatrix only possible if block sizes are equal.")
             
             diagPart <- split(rep(diag(y@matLeft), each=ncol(y@matRight)), 
-                              rep(1:ncol(y@matRight), each=ncol(y@matLeft)))
+                              rep(1:ncol(y@matLeft), each=ncol(y@matRight)))
             bdMatrix(lapply(1:length(x), function(i) crossprod(x[[i]], 
-                                                               (Diagonal(diagPart[[i]]) + 
+                                                               (diag(diagPart[[i]]) + 
                                                                   y@matRight))))
             
           } )
 
 
+setMethod("+", signature(e1="bdMatrix", e2="kroneckersumBlockMatrix"),
+          function(e1, e2) {
+            
+            stopifnot(all(dim(e2@matLeft)==length(e1)))
+            
+            bdMatrix(lapply(1:length(e1), function(k) e1[[k]] + 
+                              diag(rep(e2@matLeft[k,k], each=ncol(e2@matRight))) + 
+                              e2@matRight
+            ))
+            
+          } )

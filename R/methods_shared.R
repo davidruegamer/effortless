@@ -27,3 +27,24 @@ setMethod("+", signature(e1="bdMatrix", e2="kroneckersumBlockMatrix"),
             ))
             
           } )
+
+
+setMethod("%*%", signature(x="rowtensorBlockMatrix", y="bdMatrix"),
+          function(x, y) {
+            
+            if(length(unique(c(ncol(x@matRight), sapply(y@listOfBlocks, NROW))))!=1)
+              stop("Mismatch of blocks.")
+            
+            if(length(unique(c(1, sapply(y@listOfBlocks, NCOL))))==1)
+              return(x %*% as(y, "vector"))
+            
+            blocks <- sapply(x@matLeft@listOfBlocks, NROW)
+            sta <- c(1, cumsum(blocks)[-length(blocks)] + 1)
+            end <- cumsum(blocks)
+            
+            bdMatrix(mclapply(1:length(x@matLeft), function(i)
+              x@matLeft[[i]] * x@matRight[sta[i]:end[i], , drop = FALSE] %*% y[[i]])
+            )
+
+          } )
+

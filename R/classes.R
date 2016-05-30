@@ -69,8 +69,8 @@ kroneckersumBlockMatrix <- function(X1, X2)
 
 setClass("rowtensorBlockMatrix",
          slots = list(matLeft = "bdMatrix", matRight = "Matrix"),
-         prototype = prototype(matLeft = bdMatrix(list(c(1), matrix(c(0,0,1,1), ncol=2))), 
-                               matRight = Matrix(1:9, ncol=3)),
+         prototype = prototype(matLeft = bdMatrix(list(c(1), matrix(c(1,1,1), ncol=1))), 
+                               matRight = Matrix(1:8, ncol=2)),
          validity = function(object) {
            
            invalids <- character(0)
@@ -80,6 +80,11 @@ setClass("rowtensorBlockMatrix",
            
            if(nrow(object@matLeft)!=NROW(object@matRight)) 
              invalids <- c(invalids, "Matrices must have equal number of rows.")
+           
+           if(any(sapply(object@matLeft, NCOL) != 1)) 
+             stop("An object of class rowtensorBlockMatrix can not have blocks with more than one column.")
+           
+           if(any(unlist(object@matLeft)==0)) stop("Zero entries in blocks are not allowed.")
            
            # if(all(sapply(object@blockInd, function(x) x %in% (1:nrow(object@matLeft))))) 
            #   invalids <- c(invalids, 

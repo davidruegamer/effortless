@@ -7,6 +7,14 @@ setAs(from = "list",
       }
 )
 
+setAs(from = "bdMatrix", 
+      to = "vector", 
+      def = function(from) {
+        unlist(lapply(from@listOfBlocks,as.vector)) 
+      }
+)
+
+as.vector.bdMatrix <- function(x, mode) as(x, "vector")
 
 ### kroneckersumBlockMatrix
 

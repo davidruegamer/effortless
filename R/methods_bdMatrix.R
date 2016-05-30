@@ -1,14 +1,18 @@
 setMethod("nrow", c("bdMatrix"),
           function(x) sum( sapply(x@listOfBlocks, NROW)))
 
-setMethod("length", c("bdMatrix"),
-          function(x) length(x@listOfBlocks))
+length.bdMatrix <- function(x) length(x@listOfBlocks)
+
+setMethod("length", signature("bdMatrix"), length.bdMatrix)
 
 setMethod("ncol", c("bdMatrix"),
           function(x) sum( sapply(x@listOfBlocks, NCOL)))
 
 setMethod("dim", c("bdMatrix"),
           function(x) c(nrow(x),ncol(x)))
+
+setMethod("abs", c("bdMatrix"),
+          function(x) bdMatrix(lapply(x@listOfBlocks, abs)))
 
 setMethod("[", c("bdMatrix"),
           function(x, i, j, ..., drop=FALSE)
@@ -70,6 +74,22 @@ setMethod("%*%", signature(x = "bdMatrix", y = "bdMatrix"),
             
           })
 
+setMethod("%*%", signature(x = "bdMatrix", y = "numeric"),
+          function(x, y)
+          {
+            
+            if(ncol(x)!=length(y))
+              stop("Dimension mismatch.")
+            
+            blocks <- sapply(x@listOfBlocks, NROW)
+
+            sta <- c(1, cumsum(blocks)[-length(blocks)] + 1)
+            end <- cumsum(blocks)
+            
+            unlist(lapply(1:length(x), function(i) x[[i]] %*% y[sta[i]:end[i]]))
+            
+          })
+
 setMethod("chol", signature(x="bdMatrix"),
           function(x) {
             
@@ -78,10 +98,23 @@ setMethod("chol", signature(x="bdMatrix"),
           } )
 
 setGeneric("svd")
+# setGeneric("svd", def = function(x, nu, nv) svd(x, nu, nv),
+#            signature(x = "matrix", nu = "numeric", nv = "numeric"))
 
 svd.bdMatrix <- function(x, nu = min(nrow(x), p = ncol(x)), nv = min(nrow(x), p = ncol(x))) {
   
-  res <- mclapply(x@listOfBlocks, function(y) svd(y, nu, nv))
+  res <- mclapply(x@listOfBlocks, function(y) svd(y, nu = nu, nv = nv))
+  list(d = unlist(lapply(res,"[[","d")),
+       u = if(nu!=0) bdiag(lapply(res,"[[","u")) else NULL,
+       v = if(nv!=0) bdiag(lapply(res,"[[","v")) else NULL)
+  
+}
+
+setMethod("svd", signature(x="bdMatrix", nu="numeric", nv="numeric"), svd.bdMatrix)
+
+svd.bdMatrix <- function(x) {
+  
+  res <- mclapply(x@listOfBlocks, function(y) svd(y))
   list(d = unlist(lapply(res,"[[","d")),
        u = bdiag(lapply(res,"[[","u")),
        v = bdiag(lapply(res,"[[","v")))
@@ -136,6 +169,21 @@ setMethod("solve", c("bdMatrix"),
             if(any(sapply(a, function(xx) diff(dim(xx))!=0))) stop("solve only implemented for quadratic blocks.")
             
             bdMatrix(mclapply(a@listOfBlocks, solve))
+            
+          }
+)
+
+#' solve method for class bdMatrix
+#' 
+#' @param a object of class \code{bdMatrix}
+#' @param b object of class \code{bdMatrix}
+#' @details Due to the block diagonal structure of \code{a}, solving can be performed separately on block levels
+#' if \code{a} only consists of quadratic blocks.
+#' @import parallel
+setMethod("solve", c("bdMatrix", "bdMatrix"), 
+          function(a, b, ...) {
+            
+            bdMatrix(mclapply(1:length(a), function(i) solve(a@listOfBlocks[[i]], b@listOfBlocks[[i]], ...)))
             
           }
 )

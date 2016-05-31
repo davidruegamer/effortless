@@ -1,4 +1,4 @@
-# effortless
+# effortless (Beta version)
 
 **eff**icient **o**perations on **r**ow-wise **t**ensor product **l**inked **e**valuations with **s**pecial **s**tructures
 

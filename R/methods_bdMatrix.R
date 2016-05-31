@@ -201,3 +201,10 @@ setMethod("t", c("bdMatrix"),
           }
 )
 
+setMethod("max", c("bdMatrix"),
+          function(x) 
+          {
+            
+            max(sapply(x@listOfBlocks, max))
+            
+          })

@@ -183,7 +183,9 @@ setMethod("solve", c("bdMatrix"),
 setMethod("solve", c("bdMatrix", "bdMatrix"), 
           function(a, b, ...) {
             
-            bdMatrix(mclapply(1:length(a), function(i) solve(a@listOfBlocks[[i]], b@listOfBlocks[[i]], ...)))
+            res <- try(bdMatrix(mclapply(1:length(a), function(i) solve(a@listOfBlocks[[i]], 
+                                                             as.vector(b@listOfBlocks[[i]]), ...))))
+            if(class(res)=="try-error") return(solve(a)%*%b) else return(res)
             
           }
 )

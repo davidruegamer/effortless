@@ -21,3 +21,28 @@ hasEqualBlocksizes <- function(x) if(class(x)=="bdMatrix")
     stop("Method only implemented for class bdMatrix")
 
 
+
+isBlockDiag <- function(mat)
+{
+  
+  stopifnot(mat[1,1] != 0)
+  
+  end <- 0
+  nr <- nrow(mat)
+  
+  for(i in 1:ncol(mat)){
+    
+    sta <- end + 1 
+    ei <- which(mat[sta:nr,i]==0)
+    ei <- ifelse(length(ei)==0, length(sta:nr), max(min(ei) - 1, 1))
+    end <- (sta:nr)[ei]
+    # check column i  
+    if(sum(mat[-1*(sta:end),i])!=0) return(FALSE)
+    # check corresponding rows
+    if(sum(as.vector(mat[sta:end, -i]))!=0) return(FALSE)
+    
+  }
+  
+  return(TRUE)
+  
+}

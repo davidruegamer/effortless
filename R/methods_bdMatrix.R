@@ -51,7 +51,7 @@ setMethod("*",
           signature(e1="bdMatrix", e2="numeric"),
           function(e1, e2){
 
-            e1@listOfBlocks <- lapply(e1@listOfBlocks, function(l)l*e2)
+            e1@listOfBlocks <- mclapply(e1@listOfBlocks, function(l)l*e2)
 
             return(e1)
           }
@@ -60,7 +60,7 @@ setMethod("*",
 setMethod("crossprod", signature(x="bdMatrix"),
           function(x) {
             
-            bdMatrix(lapply(x@listOfBlocks, function(y) crossprod(y)))
+            bdMatrix(mclapply(x@listOfBlocks, function(y) crossprod(y)))
             
           } )
 
@@ -70,7 +70,7 @@ setMethod("%*%", signature(x = "bdMatrix", y = "bdMatrix"),
             
             if( length(unique(c(sapply(x@listOfBlocks, NCOL), sapply(y@listOfBlocks, NROW)))) != 1 )
               stop("Multiplication only implemented if all blocks have matching sizes.")
-            bdMatrix(lapply(1:length(x), function(i) x[[i]] %*% y[[i]]))
+            bdMatrix(mclapply(1:length(x), function(i) x[[i]] %*% y[[i]]))
             
           })
 
@@ -86,14 +86,14 @@ setMethod("%*%", signature(x = "bdMatrix", y = "numeric"),
             sta <- c(1, cumsum(blocks)[-length(blocks)] + 1)
             end <- cumsum(blocks)
             
-            unlist(lapply(1:length(x), function(i) x[[i]] %*% y[sta[i]:end[i]]))
+            unlist(mclapply(1:length(x), function(i) x[[i]] %*% y[sta[i]:end[i]]))
             
           })
 
 setMethod("chol", signature(x="bdMatrix"),
           function(x) {
             
-            bdMatrix(lapply(x@listOfBlocks, function(y) chol(y)))
+            bdMatrix(mclapply(x@listOfBlocks, function(y) chol(y)))
             
           } )
 
@@ -127,7 +127,7 @@ setMethod("forceSymmetric", c("bdMatrix"),
           function(x)
           {
             
-            bdMatrix(lapply(x, forceSymmetric))
+            bdMatrix(mclapply(x, forceSymmetric))
             
           }
 )
@@ -148,7 +148,7 @@ setMethod("+", signature(e1="bdMatrix", e2="dgCMatrix"),
             }else{
               
               indsplits <- getBlockIndices(e1)
-              res <- bdMatrix(lapply(1:length(e1), function(k) e1[[k]] + e2[indsplits$rows[[k]],
+              res <- bdMatrix(mclapply(1:length(e1), function(k) e1[[k]] + e2[indsplits$rows[[k]],
                                                                             indsplits$cols[[k]]]))
               
             }
@@ -200,3 +200,4 @@ setMethod("t", c("bdMatrix"),
             
           }
 )
+

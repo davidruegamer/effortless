@@ -1,5 +1,6 @@
 #' Matrix class for block diagonal matrices
 #'
+#' @export
 setClass("bdMatrix",
          slots = list(listOfBlocks = "list"),
          prototype = prototype(listOfBlocks = list(matrix(1:4, 2), diag(3))),
@@ -23,6 +24,7 @@ setClass("bdMatrix",
 #' @param listOfBlocks a list of matrices or numeric vectors, which represent the blocks in the given order
 #'
 #' @import Matrix
+#' @export
 bdMatrix <- function(listOfBlocks)
 {
   
@@ -30,7 +32,9 @@ bdMatrix <- function(listOfBlocks)
   
 }
 
-
+#' Matrix class for block structured kronecker sums
+#' 
+#' @export
 setClass("kroneckersumBlockMatrix",
          slots = list(matLeft = "ddiMatrix", matRight = "Matrix"),
          prototype = prototype(matLeft = Diagonal(5), 
@@ -59,6 +63,7 @@ setClass("kroneckersumBlockMatrix",
 #' @param X2 a \code{Matrix} object
 #'
 #' @import Matrix
+#' @export
 kroneckersumBlockMatrix <- function(X1, X2)
 {
   
@@ -66,7 +71,9 @@ kroneckersumBlockMatrix <- function(X1, X2)
   
 }
 
-
+#' Matrix class for block structured row-wise tensor products
+#' 
+#' @export
 setClass("rowtensorBlockMatrix",
          slots = list(matLeft = "bdMatrix", matRight = "Matrix"),
          prototype = prototype(matLeft = bdMatrix(list(c(1), matrix(c(1,1,1), ncol=1))), 
@@ -100,6 +107,7 @@ setClass("rowtensorBlockMatrix",
 #' @param X2 a \code{Matrix} object
 #'
 #' @import Matrix
+#' @export
 rowtensorBlockMatrix <- function(X1, X2)
 {
   

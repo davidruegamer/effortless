@@ -133,6 +133,7 @@ setMethod("max", c("rowtensorBlockMatrix"),
             
           })
 
+#' @export
 rankMatrix <- function(x, tol = NULL, 
                        method = c("tolNorm2", "qr.R", "qrLINPACK", 
                                   "qr", "useGrad", "maybeGrad"), 

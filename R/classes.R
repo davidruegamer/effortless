@@ -1,5 +1,7 @@
 #' Matrix class for block diagonal matrices
-#'
+#' @import Matrix
+#' @import methods
+#' @importFrom methods as new
 #' @export
 setClass("bdMatrix",
          slots = list(listOfBlocks = "list"),

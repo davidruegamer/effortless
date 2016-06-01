@@ -133,10 +133,13 @@ setMethod("max", c("rowtensorBlockMatrix"),
             
           })
 
-setGeneric("rankMatrix", def = function(x, tol = NULL, method = c("tolNorm2", "qr.R", "qrLINPACK", "qr",
-                                                                  "useGrad", "maybeGrad"), 
-                                        sval = svd(x, 0, 0)$d, warn.t = TRUE) 
-  Matrix::rankMatrix(x = x, tol = tol, method = method, sval = sval, warn.t = warn.t))
+setGeneric("rankMatrix")
+
+# setGeneric("rankMatrix", def = function(x, tol = NULL, method = c("tolNorm2", "qr.R", "qrLINPACK", "qr",
+#                                                                   "useGrad", "maybeGrad"), 
+#                                         sval = svd(x, 0, 0)$d, warn.t = TRUE) 
+#   Matrix::rankMatrix(x = x, tol = tol, method = method, sval = sval, warn.t = warn.t),
+#   signature("matrix", "ANY", "ANY", "ANY", "ANY", "ANY"))
 
 # rankMatrix <- function(x, tol, method, sval, warn.t) UseMethod("rankMatrix")
 # rankMatrix.default <- Matrix::rankMatrix

@@ -138,14 +138,28 @@ setGeneric("rankMatrix")
 rankMatrix.rowtensorBlockMatrix <- function(x, tol = NULL,
                                             method = c("tolNorm2", "qr.R", "qrLINPACK", "qr",
                                                        "useGrad", "maybeGrad"),
-                                            sval = svd(x, 0, 0)$d, 
+                                            sval,
                                             warn.t = TRUE) 
 {
   
-  ncol(x@matLeft)*rankMatrix(x@matRight, tol = tol, method = method, sval = sval, warn.t = warn.t)
+  message("Ignoring sval argument.")
+  ncol(x@matLeft)*rankMatrix(x = x@matRight, tol = tol, method = method, warn.t = warn.t)
   
 } 
 
-setMethod("rankMatrix", signature(x = "rowtensorBlockMatrix", tol = "numeric", 
-                                  method = "character", sval = "function", warn.t = "logical"), 
+setMethod("rankMatrix", signature(x = "rowtensorBlockMatrix"#, tol = "numeric", 
+                                  #method = "character", sval = "function", warn.t = "logical"
+                                  ), 
           rankMatrix.rowtensorBlockMatrix)
+
+# svd.rowtensorBlockMatrix <- function(x, nu = min(nrow(x), p = ncol(x)), nv = min(nrow(x), p = ncol(x))) {
+#   
+#   res <- mclapply(1:ncol(x@matLeft), function(i) 
+#     svd(x@matLeft[[i]] * x@matRight, nu = nu, nv = nv))
+#   list(d = unlist(lapply(res,"[[","d")),
+#        u = if(nu!=0) bdiag(lapply(res,"[[","u")) else NULL,
+#        v = if(nv!=0) bdiag(lapply(res,"[[","v")) else NULL)
+#   
+# }
+# 
+# setMethod("svd", signature(x="rowtensorBlockMatrix"), svd.rowtensorBlockMatrix)

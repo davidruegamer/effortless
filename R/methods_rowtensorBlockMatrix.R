@@ -142,7 +142,7 @@ rankMatrix.rowtensorBlockMatrix <- function(x, tol = NULL,
                                             warn.t = TRUE) 
 {
   
-  message("Ignoring sval argument.")
+  message("Ignoring sval argument in rankMatrix call.")
   ncol(x@matLeft)*rankMatrix(x = x@matRight, tol = tol, method = method, warn.t = warn.t)
   
 } 

@@ -150,8 +150,8 @@ rankMatrix.rowtensorBlockMatrix <- function(x, tol = NULL,
   
 } 
 
-setMethod("rankMatrix", signature(x = "rowtensorBlockMatrix"#, tol = "numeric", 
-                                  #method = "character", sval = "function", warn.t = "logical"
+setMethod("rankMatrix", signature(x = "rowtensorBlockMatrix", tol = "numeric", 
+                                  method = "character", sval = "function", warn.t = "logical"
 ), 
 rankMatrix.rowtensorBlockMatrix)
 

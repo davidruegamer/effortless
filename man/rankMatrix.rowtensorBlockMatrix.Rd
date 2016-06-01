@@ -2,13 +2,25 @@
 % Please edit documentation in R/methods_rowtensorBlockMatrix.R
 \name{rankMatrix.rowtensorBlockMatrix}
 \alias{rankMatrix.rowtensorBlockMatrix}
-\title{rankMatrix function for rowtensorBlockMatrix
+\title{#' @export
+rankMatrix <- function(x, tol = NULL, 
+                       method = c("tolNorm2", "qr.R", "qrLINPACK", 
+                                  "qr", "useGrad", "maybeGrad"), 
+                       sval = svd(x, 0, 0)$d, warn.t = TRUE) UseMethod("rankMatrix")
+rankMatrix.Matrix <- Matrix::rankMatrix
+rankMatrix function for rowtensorBlockMatrix
 # @export}
 \usage{
 rankMatrix.rowtensorBlockMatrix(x, method = c("tolNorm2", "qr.R", "qrLINPACK",
   "qr", "useGrad", "maybeGrad"), warn.t = TRUE)
 }
 \description{
+#' @export
+rankMatrix <- function(x, tol = NULL, 
+                       method = c("tolNorm2", "qr.R", "qrLINPACK", 
+                                  "qr", "useGrad", "maybeGrad"), 
+                       sval = svd(x, 0, 0)$d, warn.t = TRUE) UseMethod("rankMatrix")
+rankMatrix.Matrix <- Matrix::rankMatrix
 rankMatrix function for rowtensorBlockMatrix
 # @export
 }

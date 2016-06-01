@@ -110,16 +110,16 @@ svd.bdMatrix <- function(x, nu = min(nrow(x), p = ncol(x)), nv = min(nrow(x), p 
   
 }
 
-setMethod("svd", signature(x="bdMatrix", nu="numeric", nv="numeric"), svd.bdMatrix)
-
-svd.bdMatrix <- function(x) {
-  
-  res <- mclapply(x@listOfBlocks, function(y) svd(y))
-  list(d = unlist(lapply(res,"[[","d")),
-       u = bdiag(lapply(res,"[[","u")),
-       v = bdiag(lapply(res,"[[","v")))
-  
-}
+# setMethod("svd", signature(x="bdMatrix", nu="numeric", nv="numeric"), svd.bdMatrix)
+# 
+# svd.bdMatrix <- function(x) {
+#   
+#   res <- mclapply(x@listOfBlocks, function(y) svd(y))
+#   list(d = unlist(lapply(res,"[[","d")),
+#        u = bdiag(lapply(res,"[[","u")),
+#        v = bdiag(lapply(res,"[[","v")))
+#   
+# }
 
 setMethod("svd", signature(x="bdMatrix"), svd.bdMatrix)
 

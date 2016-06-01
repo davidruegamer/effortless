@@ -133,33 +133,16 @@ setMethod("max", c("rowtensorBlockMatrix"),
             
           })
 
-rankMatrix <- function(x, ...) {
-  
-  UseMethod("rankMatrix", x)
-  
-}
+setGeneric("rankMatrix", Matrix::rankMatrix)
 
-rankMatrix.Matrix <- function(x, ...) Matrix::rankMatrix(x, ...)
-
-# setMethod("rankMatrix", signature(x = "rowtensorBlockMatrix"),
-# function(x, tol = NULL, method = c("tolNorm2", "qr.R", "qrLINPACK", "qr",
-#                                    "useGrad", "maybeGrad"), warn.t = TRUE) 
-# {
-#   message("Ignoring all arguments but x in rankMatrix call.")
-#   ncol(x@matLeft)*rankMatrix(x = x@matRight, tol = tol, method = method, warn.t = warn.t)
-#   
-# }
-# )
-
-#' rankMatrix function for rowtensorBlockMatrix class
-#'
-#' @method rankMatrix rowtensorBlockMatrix
-#' @export
-rankMatrix.rowtensorBlockMatrix <- function(x, ...)  {
-  
-    ncol(x@matLeft) * rankMatrix(x = x@matRight)
-
-  }
+setMethod("rankMatrix", signature(x = "rowtensorBlockMatrix"),
+          function(x, method, warn.t)
+          {
+            message("Ignoring all arguments but x in rankMatrix call.")
+            ncol(x@matLeft) * rankMatrix(x = x@matRight, method = method, warn.t = warn.t)
+            
+          }
+)
 
 # svd.rowtensorBlockMatrix <- function(x, nu = min(nrow(x), p = ncol(x)), nv = min(nrow(x), p = ncol(x))) {
 #   

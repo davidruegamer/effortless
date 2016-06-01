@@ -189,7 +189,7 @@ setMethod("rankMatrix", signature(x = "rowtensorBlockMatrix"#, # tol = "numeric"
                                   #method = "character", #sval = "function",
                                   #warn.t = "logical"
                                   ),
-          function(x) = rankMatrix.rowtensorBlockMatrix(x))
+          function(x) rankMatrix.rowtensorBlockMatrix(x))
 
 # setMethod("rankMatrix", signature(x = "Matrix"#, # tol = "numeric",
 #                                   #method = "character", #sval = "function",

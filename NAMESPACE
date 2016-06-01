@@ -2,7 +2,6 @@
 
 export(bdMatrix)
 export(kroneckersumBlockMatrix)
-export(rankMatrix.rowtensorBlockMatrix)
 export(rowtensorBlockMatrix)
 exportClasses(bdMatrix)
 exportClasses(kroneckersumBlockMatrix)

@@ -133,10 +133,10 @@ setMethod("max", c("rowtensorBlockMatrix"),
             
           })
 
-# setGeneric("rankMatrix")
+setGeneric("rankMatrix")
 
-rankMatrix <- function(x, tol, method, sval, warn.t) UseMethod("rankMatrix")
-rankMatrix.default <- Matrix::rankMatrix
+# rankMatrix <- function(x, tol, method, sval, warn.t) UseMethod("rankMatrix")
+# rankMatrix.default <- Matrix::rankMatrix
 
 
 # rankMatrix.rowtensorBlockMatrix <- function(x, tol = NULL,
@@ -167,11 +167,11 @@ rankMatrix.rowtensorBlockMatrix <- function(x,
   
 } 
 
-# setMethod("rankMatrix", signature(x = "rowtensorBlockMatrix"#, tol = "numeric", 
-#                                   method = "character", #sval = "function", 
-#                                   warn.t = "logical"
-#                                   ), 
-#           rankMatrix.rowtensorBlockMatrix)
+setMethod("rankMatrix", signature(x = "rowtensorBlockMatrix", # tol = "numeric",
+                                  method = "character", #sval = "function",
+                                  warn.t = "logical"
+                                  ),
+          rankMatrix.rowtensorBlockMatrix)
 
 # svd.rowtensorBlockMatrix <- function(x, nu = min(nrow(x), p = ncol(x)), nv = min(nrow(x), p = ncol(x))) {
 #   

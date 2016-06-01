@@ -171,14 +171,11 @@ setGeneric("rankMatrix", Matrix::rankMatrix)
 
 #' rankMatrix function for rowtensorBlockMatrix
 #' @export
-rankMatrix.rowtensorBlockMatrix <- function(x,
-                                            method = c("tolNorm2", "qr.R", "qrLINPACK", "qr",
-                                                       "useGrad", "maybeGrad"),
-                                            warn.t = TRUE) 
+rankMatrix.rowtensorBlockMatrix <- function(x) 
 {
   
-  message("Ignoring sval argument in rankMatrix call.")
-  ncol(x@matLeft)*rankMatrix(x = x@matRight, method = method, warn.t = warn.t)
+  message("Ignoring all arguments but x in rankMatrix call.")
+  ncol(x@matLeft)*rankMatrix(x = x@matRight, method = "qr", warn.t = FALSE)
   
 } 
 
@@ -188,11 +185,17 @@ rankMatrix.rowtensorBlockMatrix <- function(x,
 # ),
 # rankMatrix.Matrix)
 
-setMethod("rankMatrix", signature("rowtensorBlockMatrix"#, # tol = "numeric",
+setMethod("rankMatrix", signature(x = "rowtensorBlockMatrix"#, # tol = "numeric",
                                   #method = "character", #sval = "function",
                                   #warn.t = "logical"
                                   ),
-          rankMatrix.rowtensorBlockMatrix)
+          function(x) = rankMatrix.rowtensorBlockMatrix(x))
+
+# setMethod("rankMatrix", signature(x = "Matrix"#, # tol = "numeric",
+#                                   #method = "character", #sval = "function",
+#                                   #warn.t = "logical"
+# ),
+# rankMatrix.Matrix)
 
 # svd.rowtensorBlockMatrix <- function(x, nu = min(nrow(x), p = ncol(x)), nv = min(nrow(x), p = ncol(x))) {
 #   

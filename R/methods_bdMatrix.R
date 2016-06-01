@@ -101,14 +101,17 @@ setGeneric("svd")
 # setGeneric("svd", def = function(x, nu, nv) svd(x, nu, nv),
 #            signature(x = "matrix", nu = "numeric", nv = "numeric"))
 
-svd.bdMatrix <- function(x, nu = min(nrow(x), p = ncol(x)), nv = min(nrow(x), p = ncol(x))) {
+setMethod("svd", signature(x="bdMatrix"), 
+          function(x, nu = min(nrow(x), p = ncol(x)), nv = min(nrow(x), p = ncol(x))) 
+            {
   
   res <- mclapply(x@listOfBlocks, function(y) svd(y, nu = nu, nv = nv))
   list(d = unlist(lapply(res,"[[","d")),
        u = if(nu!=0) bdiag(lapply(res,"[[","u")) else NULL,
        v = if(nv!=0) bdiag(lapply(res,"[[","v")) else NULL)
   
-}
+          }
+)
 
 # setMethod("svd", signature(x="bdMatrix", nu="numeric", nv="numeric"), svd.bdMatrix)
 # 

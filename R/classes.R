@@ -36,6 +36,7 @@ bdMatrix <- function(listOfBlocks)
 
 #' Matrix class for block structured kronecker sums
 #' 
+#' @import Matrix
 #' @export
 setClass("kroneckersumBlockMatrix",
          slots = list(matLeft = "ddiMatrix", matRight = "Matrix"),
@@ -75,6 +76,7 @@ kroneckersumBlockMatrix <- function(X1, X2)
 
 #' Matrix class for block structured row-wise tensor products
 #' 
+#' @import Matrix
 #' @export
 setClass("rowtensorBlockMatrix",
          slots = list(matLeft = "bdMatrix", matRight = "Matrix"),

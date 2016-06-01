@@ -133,7 +133,7 @@ setMethod("max", c("rowtensorBlockMatrix"),
             
           })
 
-setGeneric("rankMatrix")
+setGeneric("rankMatrix", def = Matrix::rankMatrix)
 
 # rankMatrix <- function(x, tol, method, sval, warn.t) UseMethod("rankMatrix")
 # rankMatrix.default <- Matrix::rankMatrix

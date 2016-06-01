@@ -5,8 +5,8 @@
 \title{rankMatrix function for rowtensorBlockMatrix
 # @export}
 \usage{
-\method{rankMatrix}{rowtensorBlockMatrix}(x, method = c("tolNorm2", "qr.R",
-  "qrLINPACK", "qr", "useGrad", "maybeGrad"), warn.t = TRUE)
+rankMatrix.rowtensorBlockMatrix(x, method = c("tolNorm2", "qr.R", "qrLINPACK",
+  "qr", "useGrad", "maybeGrad"), warn.t = TRUE)
 }
 \description{
 rankMatrix function for rowtensorBlockMatrix

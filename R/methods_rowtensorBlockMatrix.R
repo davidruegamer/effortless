@@ -138,7 +138,7 @@ rankMatrix <- function(x, tol = NULL,
                        method = c("tolNorm2", "qr.R", "qrLINPACK", 
                                   "qr", "useGrad", "maybeGrad"), 
                        sval = svd(x, 0, 0)$d, warn.t = TRUE) UseMethod("rankMatrix")
-rankMatrix.Matrix <- Matrix:::rankMatrix
+rankMatrix.Matrix <- Matrix::rankMatrix
 
 # setGeneric("rankMatrix", def = function(x, tol = NULL, method = c("tolNorm2", "qr.R", "qrLINPACK", "qr",
 #                                                                   "useGrad", "maybeGrad"), 
@@ -180,11 +180,17 @@ rankMatrix.rowtensorBlockMatrix <- function(x,
   
 } 
 
-# setMethod("rankMatrix", signature(x = "rowtensorBlockMatrix"#, # tol = "numeric",
-#                                   #method = "character", #sval = "function",
-#                                   #warn.t = "logical"
-#                                   ),
-#           rankMatrix.rowtensorBlockMatrix)
+setMethod("rankMatrix", signature(x = "Matrix"#, # tol = "numeric",
+                                  #method = "character", #sval = "function",
+                                  #warn.t = "logical"
+),
+rankMatrix.Matrix)
+
+setMethod("rankMatrix", signature(x = "rowtensorBlockMatrix"#, # tol = "numeric",
+                                  #method = "character", #sval = "function",
+                                  #warn.t = "logical"
+                                  ),
+          rankMatrix.rowtensorBlockMatrix)
 
 # svd.rowtensorBlockMatrix <- function(x, nu = min(nrow(x), p = ncol(x)), nv = min(nrow(x), p = ncol(x))) {
 #   

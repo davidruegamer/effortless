@@ -155,21 +155,21 @@ setMethod("rankMatrix", signature(x = "rowtensorBlockMatrix", tol = "numeric",
 ), 
 rankMatrix.rowtensorBlockMatrix)
 
-rankMatrix.rowtensorBlockMatrix <- function(x,
-                                            method = c("tolNorm2", "qr.R", "qrLINPACK", "qr",
-                                                       "useGrad", "maybeGrad"),
-                                            warn.t = TRUE) 
-{
-  
-  message("Ignoring sval argument in rankMatrix call.")
-  ncol(x@matLeft)*rankMatrix(x = x@matRight, method = method, warn.t = warn.t)
-  
-} 
-
-setMethod("rankMatrix", signature(x = "rowtensorBlockMatrix"#, tol = "numeric", 
-                                  #method = "character", sval = "function", warn.t = "logical"
-                                  ), 
-          rankMatrix.rowtensorBlockMatrix)
+# rankMatrix.rowtensorBlockMatrix <- function(x,
+#                                             method = c("tolNorm2", "qr.R", "qrLINPACK", "qr",
+#                                                        "useGrad", "maybeGrad"),
+#                                             warn.t = TRUE) 
+# {
+#   
+#   message("Ignoring sval argument in rankMatrix call.")
+#   ncol(x@matLeft)*rankMatrix(x = x@matRight, method = method, warn.t = warn.t)
+#   
+# } 
+# 
+# setMethod("rankMatrix", signature(x = "rowtensorBlockMatrix"#, tol = "numeric", 
+#                                   #method = "character", sval = "function", warn.t = "logical"
+#                                   ), 
+#           rankMatrix.rowtensorBlockMatrix)
 
 # svd.rowtensorBlockMatrix <- function(x, nu = min(nrow(x), p = ncol(x)), nv = min(nrow(x), p = ncol(x))) {
 #   

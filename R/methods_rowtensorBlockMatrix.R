@@ -136,10 +136,11 @@ setMethod("max", c("rowtensorBlockMatrix"),
 setGeneric("rankMatrix", Matrix::rankMatrix)
 
 setMethod("rankMatrix", signature(x = "rowtensorBlockMatrix"),
-function(x) 
+function(x, tol = NULL, method = c("tolNorm2", "qr.R", "qrLINPACK", "qr",
+                                   "useGrad", "maybeGrad"), warn.t = TRUE) 
 {
   message("Ignoring all arguments but x in rankMatrix call.")
-  ncol(x@matLeft)*rankMatrix(x = x@matRight, method = "qr", warn.t = FALSE)
+  ncol(x@matLeft)*rankMatrix(x = x@matRight, tol = tol, method = method, warn.t = warn.t)
   
 }
 )
@@ -154,4 +155,13 @@ function(x)
 #   
 # }
 # 
-# setMethod("svd", signature(x="rowtensorBlockMatrix"), svd.rowtensorBlockMatrix)
+# setMethod("svd", signature(x="rowtensorBlockMatrix"), 
+#           function(x, nu = min(nrow(x), p = ncol(x)), nv = min(nrow(x), p = ncol(x))) {
+# 
+#               res <- mclapply(x@matRight, nu = nu, nv = nv)
+#               list(d = unlist(lapply(res,"[[","d")),
+#                    u = if(nu!=0) bdiag(lapply(res,"[[","u")) else NULL,
+#                    v = if(nv!=0) bdiag(lapply(res,"[[","v")) else NULL)
+# 
+#             }
+#           )

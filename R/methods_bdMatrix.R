@@ -163,6 +163,7 @@ setMethod("+", signature(e1="bdMatrix", e2="dgCMatrix"),
 #' @details Due to the block diagonal structure of \code{a}, solving can be performed separately on block levels
 #' if \code{a} only consists of quadratic blocks.
 #' @import parallel
+#' @export
 setMethod("solve", c("bdMatrix"), 
           function(a) {
             
@@ -180,6 +181,7 @@ setMethod("solve", c("bdMatrix"),
 #' @details Due to the block diagonal structure of \code{a}, solving can be performed separately on block levels
 #' if \code{a} only consists of quadratic blocks.
 #' @import parallel
+#' @export
 setMethod("solve", c("bdMatrix", "bdMatrix"), 
           function(a, b, ...) {
             
@@ -195,6 +197,7 @@ setMethod("solve", c("bdMatrix", "bdMatrix"),
 #' @param x object of class \code{bdMatrix}
 #' 
 #' @import parallel
+#' @export
 setMethod("t", c("bdMatrix"), 
           function(x) {
             

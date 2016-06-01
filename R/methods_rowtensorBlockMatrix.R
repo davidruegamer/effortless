@@ -138,11 +138,14 @@ setGeneric("rankMatrix")
 rankMatrix.rowtensorBlockMatrix <- function(x, tol = NULL,
                                             method = c("tolNorm2", "qr.R", "qrLINPACK", "qr",
                                                        "useGrad", "maybeGrad"),
-                                            sval = svd(x, 0, 0)$d, warn.t = TRUE) 
+                                            sval = svd(x, 0, 0)$d, 
+                                            warn.t = TRUE) 
 {
   
   ncol(x@matLeft)*rankMatrix(x@matRight, tol = tol, method = method, sval = sval, warn.t = warn.t)
   
 } 
 
-setMethod("rankMatrix", signature(x="rowtensorBlockMatrix"), rankMatrix.rowtensorBlockMatrix)
+setMethod("rankMatrix", signature(x = "rowtensorBlockMatrix", tol = "numeric", 
+                                  method = "character", sval = "function", warn.t = "logical"), 
+          rankMatrix.rowtensorBlockMatrix)

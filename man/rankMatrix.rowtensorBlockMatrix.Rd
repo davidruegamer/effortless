@@ -8,8 +8,7 @@ rankMatrix <- function(x, tol = NULL,
                                   "qr", "useGrad", "maybeGrad"), 
                        sval = svd(x, 0, 0)$d, warn.t = TRUE) UseMethod("rankMatrix")
 rankMatrix.Matrix <- Matrix::rankMatrix
-rankMatrix function for rowtensorBlockMatrix
-# @export}
+rankMatrix function for rowtensorBlockMatrix}
 \usage{
 rankMatrix.rowtensorBlockMatrix(x, method = c("tolNorm2", "qr.R", "qrLINPACK",
   "qr", "useGrad", "maybeGrad"), warn.t = TRUE)
@@ -22,6 +21,5 @@ rankMatrix <- function(x, tol = NULL,
                        sval = svd(x, 0, 0)$d, warn.t = TRUE) UseMethod("rankMatrix")
 rankMatrix.Matrix <- Matrix::rankMatrix
 rankMatrix function for rowtensorBlockMatrix
-# @export
 }
 

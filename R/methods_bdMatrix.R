@@ -121,7 +121,7 @@ svd.bdMatrix <- function(x, nu = min(nrow(x), p = ncol(x)), nv = min(nrow(x), p 
 #   
 # }
 
-setMethod("svd", signature(x="bdMatrix"), svd.bdMatrix)
+# setMethod("svd", signature(x="bdMatrix"), svd.bdMatrix)
 
 setMethod("forceSymmetric", c("bdMatrix"),
           function(x)

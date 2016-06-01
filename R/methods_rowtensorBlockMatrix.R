@@ -170,7 +170,7 @@ setGeneric("rankMatrix", Matrix::rankMatrix)
 # rankMatrix.rowtensorBlockMatrix)
 
 #' rankMatrix function for rowtensorBlockMatrix
-#' # @export
+#' @export
 rankMatrix.rowtensorBlockMatrix <- function(x,
                                             method = c("tolNorm2", "qr.R", "qrLINPACK", "qr",
                                                        "useGrad", "maybeGrad"),

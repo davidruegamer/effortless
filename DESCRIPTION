@@ -15,7 +15,5 @@ Depends:
 License: GPL-3
 LazyData: true
 Imports:
-    Matrix,
-    methods,
     parallel
 RoxygenNote: 5.0.1

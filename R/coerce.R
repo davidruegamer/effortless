@@ -7,6 +7,7 @@ setAs(from = "list",
       }
 )
 
+#' @export
 setAs(from = "bdMatrix", 
       to = "vector", 
       def = function(from) {
@@ -16,6 +17,7 @@ setAs(from = "bdMatrix",
 
 #'  Coerce bdMatrix to vector
 #' 
+#' @export
 as.vector.bdMatrix <- function(x, mode) as(x, "vector")
 
 setAs(from = "Matrix", 

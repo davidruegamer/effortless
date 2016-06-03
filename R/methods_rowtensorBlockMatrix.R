@@ -146,6 +146,15 @@ setMethod("max", c("rowtensorBlockMatrix"),
 
 ## just overwrite rankMatrix
 
+#' rankMatrix extension for rowtensorBlockMatrix objects
+#' 
+#' @param x object of class rowtensorBlockMatrix or a numeric matrix
+#' @param ... further arguments passed to \code{Matrix::rankMatrix}
+#' @details if x is a numeric matrix \code{Matrix::rankMatrix} is called on x. Else the rank is computed
+#' as product of number of colums of the \code{matLeft}-slot and the rank of the \code{matRight}-slot,
+#' which is also calculated via Matrix::rankMatrix
+#' 
+#' @export
 rankMatrix <- function(x, ...)
 {
   

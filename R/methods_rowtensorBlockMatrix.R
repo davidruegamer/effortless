@@ -133,16 +133,27 @@ setMethod("max", c("rowtensorBlockMatrix"),
             
           })
 
-setGeneric("rankMatrix", Matrix::rankMatrix)
+# setGeneric("rankMatrix", Matrix::rankMatrix)
 
-setMethod("rankMatrix", signature(x = "rowtensorBlockMatrix"),
-          function(x, method, warn.t)
-          {
-            message("Ignoring all arguments but x in rankMatrix call.")
-            ncol(x@matLeft) * rankMatrix(x = x@matRight, method = method, warn.t = warn.t)
-            
-          }
-)
+# setMethod("rankMatrix", signature(x = "rowtensorBlockMatrix"),
+#           function(x, method, warn.t)
+#           {
+#             message("Ignoring all arguments but x in rankMatrix call.")
+#             ncol(x@matLeft) * rankMatrix(x = x@matRight, method = method, warn.t = warn.t)
+#             
+#           }
+# )
+
+## just overwrite rankMatrix
+
+rankMatrix <- function(x, ...)
+{
+  
+  if(inherits(x, "Matrix") | is.matrix(x)) 
+    Matrix::rankMatrix(x, ...) else 
+      ncol(x@matLeft) * Matrix::rankMatrix(x = x@matRight, ...)
+  
+}
 
 # svd.rowtensorBlockMatrix <- function(x, nu = min(nrow(x), p = ncol(x)), nv = min(nrow(x), p = ncol(x))) {
 #   

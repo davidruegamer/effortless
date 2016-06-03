@@ -97,10 +97,12 @@ setMethod("chol", signature(x="bdMatrix"),
             
           } )
 
+#' @export
 setGeneric("svd")
 # setGeneric("svd", def = function(x, nu, nv) svd(x, nu, nv),
 #            signature(x = "matrix", nu = "numeric", nv = "numeric"))
 
+#' @export
 setMethod("svd", signature(x="bdMatrix"), 
           function(x, nu = min(nrow(x), p = ncol(x)), nv = min(nrow(x), p = ncol(x))) 
             {

@@ -17,7 +17,9 @@ setAs(from = "bdMatrix",
 
 #'  Coerce bdMatrix to vector
 #' 
-#' @export
+#' @param x object of class bdMatrix
+#' @param mode
+#' 
 as.vector.bdMatrix <- function(x, mode) as(x, "vector")
 
 setAs(from = "Matrix", 

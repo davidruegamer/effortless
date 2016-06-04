@@ -1,9 +1,8 @@
 setMethod("nrow", c("bdMatrix"),
           function(x) sum( sapply(x@listOfBlocks, NROW)))
 
-length.bdMatrix <- function(x) length(x@listOfBlocks)
-
-setMethod("length", signature("bdMatrix"), length.bdMatrix)
+setMethod("length", signature("bdMatrix"), 
+          function(x) length(x@listOfBlocks))
 
 setMethod("ncol", c("bdMatrix"),
           function(x) sum( sapply(x@listOfBlocks, NCOL)))
@@ -174,7 +173,9 @@ setMethod("solve", c("bdMatrix"),
             
             if(any(sapply(a, function(xx) diff(dim(xx))!=0))) stop("solve only implemented for quadratic blocks.")
             
-            bdMatrix(mclapply(a@listOfBlocks, solve))
+            res <- suppressWarnings(try(mclapply(a@listOfBlocks, solve)))
+            if(length(cres <- which(sapply(res,class)=="try-error"))>0) stop(res[cres]) else bdMatrix(res)
+            
             
           }
 )
@@ -183,8 +184,12 @@ setMethod("solve", c("bdMatrix"),
 #' 
 #' @param a object of class \code{bdMatrix}
 #' @param b object of class \code{bdMatrix}
+#' @param ... further arguments passed to \code{solve} (see \code{?solve})
+#' 
 #' @details Due to the block diagonal structure of \code{a}, solving can be performed separately on block levels
-#' if \code{a} only consists of quadratic blocks.
+#' if \code{a} only consists of quadratic blocks. However, \code{solve} does not exploit the second argument \code{b}
+#' as it is done in solve with vectors or matrices. Instead, \code{solve(a,b)} simply calculates \code{solve(a)\%*\%b}
+#' blockwise for corresponding blocks.
 #' @import parallel
 #' @export
 setMethod("solve", c("bdMatrix", "bdMatrix"), 

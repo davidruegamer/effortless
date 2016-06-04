@@ -17,6 +17,8 @@ solve method for class bdMatrix
 }
 \details{
 Due to the block diagonal structure of \code{a}, solving can be performed separately on block levels
-if \code{a} only consists of quadratic blocks.
+if \code{a} only consists of quadratic blocks. However, \code{solve} does not exploit the second argument \code{b}
+as it is done in solve with vectors or matrices. Instead, \code{solve(a,b)} simply calculates \code{solve(a)\%*\%b}
+blockwise for corresponding blocks.
 }
 

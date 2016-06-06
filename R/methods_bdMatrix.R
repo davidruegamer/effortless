@@ -1,18 +1,24 @@
+#' @rdname bdMatrix-class
 setMethod("nrow", c("bdMatrix"),
           function(x) sum( sapply(x@listOfBlocks, NROW)))
 
+#' @rdname bdMatrix-class
 setMethod("length", signature("bdMatrix"), 
           function(x) length(x@listOfBlocks))
 
+#' @rdname bdMatrix-class
 setMethod("ncol", c("bdMatrix"),
           function(x) sum( sapply(x@listOfBlocks, NCOL)))
 
+#' @rdname bdMatrix-class
 setMethod("dim", c("bdMatrix"),
           function(x) c(nrow(x),ncol(x)))
 
+#' @rdname bdMatrix-class
 setMethod("abs", c("bdMatrix"),
           function(x) bdMatrix(lapply(x@listOfBlocks, abs)))
 
+#' @rdname bdMatrix-class
 setMethod("[", c("bdMatrix"),
           function(x, i, j, ..., drop=FALSE)
           {
@@ -37,6 +43,7 @@ setMethod("[", c("bdMatrix"),
           }
 )
 
+#' @rdname bdMatrix-class
 setMethod("[[", c("bdMatrix"),
           function(x, i, ...)
           {
@@ -46,6 +53,7 @@ setMethod("[[", c("bdMatrix"),
           }
 )
 
+#' @rdname bdMatrix-class
 setMethod("*",
           signature(e1="bdMatrix", e2="numeric"),
           function(e1, e2){
@@ -56,6 +64,7 @@ setMethod("*",
           }
 )
 
+#' @rdname bdMatrix-class
 setMethod("crossprod", signature(x="bdMatrix"),
           function(x) {
             
@@ -63,6 +72,7 @@ setMethod("crossprod", signature(x="bdMatrix"),
             
           } )
 
+#' @rdname bdMatrix-class
 setMethod("%*%", signature(x = "bdMatrix", y = "bdMatrix"),
           function(x, y)
           {
@@ -73,6 +83,7 @@ setMethod("%*%", signature(x = "bdMatrix", y = "bdMatrix"),
             
           })
 
+#' @rdname bdMatrix-class
 setMethod("%*%", signature(x = "bdMatrix", y = "numeric"),
           function(x, y)
           {
@@ -89,6 +100,7 @@ setMethod("%*%", signature(x = "bdMatrix", y = "numeric"),
             
           })
 
+#' @rdname bdMatrix-class
 setMethod("chol", signature(x="bdMatrix"),
           function(x) {
             
@@ -96,12 +108,21 @@ setMethod("chol", signature(x="bdMatrix"),
             
           } )
 
+
 #' @export
 setGeneric("svd")
 # setGeneric("svd", def = function(x, nu, nv) svd(x, nu, nv),
 #            signature(x = "matrix", nu = "numeric", nv = "numeric"))
 
+#' svd method for bdMatrix class
 #' @export
+#' 
+#' @param x a object of class \code{bdMatrix} whose SVD decomposition is to be computed
+#' @param nu the number of left singular vectors to be computed. This must between \code{0} and \code{n = nrow(x)}.
+#' @param nv the number of right singular vectors to be computed. This must be between \code{0} and \code{p = ncol(x)}.
+#' 
+#' @export
+#' 
 setMethod("svd", signature(x="bdMatrix"), 
           function(x, nu = min(nrow(x), p = ncol(x)), nv = min(nrow(x), p = ncol(x))) 
             {
@@ -127,6 +148,7 @@ setMethod("svd", signature(x="bdMatrix"),
 
 # setMethod("svd", signature(x="bdMatrix"), svd.bdMatrix)
 
+#' @rdname bdMatrix-class
 setMethod("forceSymmetric", c("bdMatrix"),
           function(x)
           {
@@ -136,6 +158,7 @@ setMethod("forceSymmetric", c("bdMatrix"),
           }
 )
 
+#' @rdname bdMatrix-class
 setMethod("+", signature(e1="bdMatrix", e2="dgCMatrix"),
           function(e1, e2) {
             
@@ -216,6 +239,7 @@ setMethod("t", c("bdMatrix"),
           }
 )
 
+#' @rdname bdMatrix-class
 setMethod("max", c("bdMatrix"),
           function(x) 
           {

@@ -3,6 +3,7 @@ evalMat <- function(x) if(class(x)=="kroneckersumBlockMatrix")
     stop("Function only defined for kroneckersumBlockMatrix class.")
 
 
+#' @rdname kroneckersumBlockMatrix-class
 setMethod("*", signature(e1="kroneckersumBlockMatrix", e2="numeric"),
           function(e1, e2){
 
@@ -13,6 +14,7 @@ setMethod("*", signature(e1="kroneckersumBlockMatrix", e2="numeric"),
           }
 )
 
+#' @rdname kroneckersumBlockMatrix-class
 setMethod("*", signature(e1="numeric", e2="kroneckersumBlockMatrix"),
           function(e1, e2){
             
@@ -23,5 +25,6 @@ setMethod("*", signature(e1="numeric", e2="kroneckersumBlockMatrix"),
           }
 )
 
+#' @rdname kroneckersumBlockMatrix-class
 setMethod("nrow", c("kroneckersumBlockMatrix"),
           function(x) nrow(x@matLeft) * nrow(x@matRight))

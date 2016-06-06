@@ -14,4 +14,10 @@ rowtensorBlockMatrix(X1, X2)
 \description{
 Constructor for rowtensorBlockMatrix objects
 }
+\examples{
+matLeft = bdMatrix(list(c(1), matrix(c(1,1,1), ncol=1)))
+matRight = Matrix(1:8, ncol=2)
+rowtensorBlockMatrix(matLeft, matRight)
+
+}
 

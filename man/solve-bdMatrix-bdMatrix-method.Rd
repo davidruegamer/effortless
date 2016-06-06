@@ -11,6 +11,8 @@
 \item{a}{object of class \code{bdMatrix}}
 
 \item{b}{object of class \code{bdMatrix}}
+
+\item{...}{further arguments passed to \code{solve} (see \code{?solve})}
 }
 \description{
 solve method for class bdMatrix

@@ -1,7 +1,19 @@
-#' Matrix class for block diagonal matrices
+#' Matrix class and methods for block diagonal matrices
+#' 
+#' @param x object of class \code{bdMatrix}
+#' @param i integer for subsetting rows of \code{x}
+#' @param j integer for subsetting columns of \code{x}
+#' @param ... further arguments passed to ordinary subsetting functions
+#' @param drop logical. If TRUE the result is coerced to the lowest possible dimension.
+#' @param e1 see \code{x}
+#' @param e2 see \code{x}
+#' @param y see \code{x}
+#' 
 #' @import Matrix
 #' @import methods
 #' @importFrom methods as new
+#' @rdname bdMatrix-class
+#' 
 #' @export
 setClass("bdMatrix",
          slots = list(listOfBlocks = "list"),
@@ -26,6 +38,13 @@ setClass("bdMatrix",
 #' @param listOfBlocks a list of matrices or numeric vectors, which represent the blocks in the given order
 #'
 #' @import Matrix
+#' 
+#' @examples
+#' ## construct a bdMatrix
+#' bdMatrix(listOfBlocks = list(matrix(1:4, 2), diag(3)))
+#' ## see what the whole matrix looks like by using Matrix::bdiag of the list elements
+#' bdiag(bdMatrix(listOfBlocks = list(matrix(1:4, 2), diag(3)))@listOfBlocks)
+#' 
 #' @export
 bdMatrix <- function(listOfBlocks)
 {
@@ -34,8 +53,13 @@ bdMatrix <- function(listOfBlocks)
   
 }
 
-#' Matrix class for block structured kronecker sums
+#' Matrix class and methods for block structured kronecker sums
 #' 
+#' @param x object of class \code{kroneckersumBlockMatrix}
+#' @param e1 see \code{x}
+#' @param e2 see \code{x}
+#' 
+#' @rdname kroneckersumBlockMatrix-class
 #' @import Matrix
 #' @export
 setClass("kroneckersumBlockMatrix",
@@ -66,6 +90,12 @@ setClass("kroneckersumBlockMatrix",
 #' @param X2 a \code{Matrix} object
 #'
 #' @import Matrix
+#' 
+#' @examples 
+#' matLeft = Diagonal(5)
+#' matRight = Matrix(1:9, ncol=3)
+#' kroneckersumBlockMatrix(matLeft, matRight)
+#' 
 #' @export
 kroneckersumBlockMatrix <- function(X1, X2)
 {
@@ -74,8 +104,18 @@ kroneckersumBlockMatrix <- function(X1, X2)
   
 }
 
-#' Matrix class for block structured row-wise tensor products
+#' Matrix class and methods for block structured row-wise tensor products
 #' 
+#' @param x object of class \code{rowtensorBlockMatrix}
+#' @param i integer for subsetting rows of \code{x}
+#' @param j integer for subsetting columns of \code{x}
+#' @param ... further arguments passed to ordinary subsetting functions
+#' @param drop logical. If TRUE the result is coerced to the lowest possible dimension.
+#' @param e1 see \code{x}
+#' @param e2 see \code{x}
+#' @param y see \code{x}
+#' 
+#' @rdname rowtensorBlockMatrix-class
 #' @import Matrix
 #' @export
 setClass("rowtensorBlockMatrix",
@@ -109,6 +149,11 @@ setClass("rowtensorBlockMatrix",
 #'
 #' @param X1 a \code{bdMatrix} object
 #' @param X2 a \code{Matrix} object
+#' 
+#' @examples 
+#' matLeft = bdMatrix(list(c(1), matrix(c(1,1,1), ncol=1)))
+#' matRight = Matrix(1:8, ncol=2)
+#' rowtensorBlockMatrix(matLeft, matRight)
 #'
 #' @import Matrix
 #' @export

@@ -12,4 +12,11 @@ bdMatrix(listOfBlocks)
 \description{
 Constructor for block diagonal matrices
 }
+\examples{
+## construct a bdMatrix
+bdMatrix(listOfBlocks = list(matrix(1:4, 2), diag(3)))
+## see what the whole matrix looks like by using Matrix::bdiag of the list elements
+bdiag(bdMatrix(listOfBlocks = list(matrix(1:4, 2), diag(3)))@listOfBlocks)
+
+}
 

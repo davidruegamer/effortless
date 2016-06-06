@@ -6,6 +6,11 @@
 \usage{
 as.vector.bdMatrix(x, mode)
 }
+\arguments{
+\item{x}{object of class bdMatrix}
+
+\item{mode}{see \code{?as.vector}}
+}
 \description{
 Coerce bdMatrix to vector
 }

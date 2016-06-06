@@ -14,4 +14,10 @@ kroneckersumBlockMatrix(X1, X2)
 \description{
 Constructor for kroneckersumBlockMatrix objects
 }
+\examples{
+matLeft = Diagonal(5)
+matRight = Matrix(1:9, ncol=3)
+kroneckersumBlockMatrix(matLeft, matRight)
+
+}
 

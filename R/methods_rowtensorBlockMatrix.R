@@ -1,3 +1,4 @@
+#' @rdname rowtensorBlockMatrix-class
 setMethod("[", c("rowtensorBlockMatrix"),
           function(x, i, j, ..., drop=TRUE)
           {
@@ -61,6 +62,7 @@ setMethod("crossprod", signature(x="rowtensorBlockMatrix"),
           } 
 )
 
+#' @rdname rowtensorBlockMatrix-class
 setMethod("crossprod", signature(x="rowtensorBlockMatrix","numeric"),
           function(x, y) {
             
@@ -75,6 +77,7 @@ setMethod("crossprod", signature(x="rowtensorBlockMatrix","numeric"),
           } 
 )
 
+#' @rdname rowtensorBlockMatrix-class
 setMethod("%*%", signature(x="rowtensorBlockMatrix","numeric"),
           function(x, y) {
             
@@ -96,6 +99,7 @@ setMethod("%*%", signature(x="rowtensorBlockMatrix","numeric"),
           } 
 )
 
+#' @rdname rowtensorBlockMatrix-class
 setMethod("*", signature(e1="rowtensorBlockMatrix", e2="numeric"),
           function(e1, e2){
             
@@ -109,9 +113,11 @@ setMethod("*", signature(e1="rowtensorBlockMatrix", e2="numeric"),
           }
 )
 
+#' @rdname rowtensorBlockMatrix-class
 setMethod("dim", c("rowtensorBlockMatrix"),
           function(x) c(nrow(x@matRight),length(x@matLeft)*ncol(x@matRight)))
 
+#' @rdname rowtensorBlockMatrix-class
 setMethod("abs", signature("rowtensorBlockMatrix"),
           function(x) 
             {
@@ -123,6 +129,7 @@ setMethod("abs", signature("rowtensorBlockMatrix"),
           })
 
 
+#' @rdname rowtensorBlockMatrix-class
 setMethod("max", c("rowtensorBlockMatrix"),
           function(x) 
           {

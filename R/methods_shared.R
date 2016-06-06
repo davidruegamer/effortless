@@ -1,3 +1,11 @@
+#' crossprod function for crossproduct of a bdMatrix and a kroneckersumBlockMatrix
+#' 
+#' @param x object of class \code{bdMatrix}
+#' @param y object of class \code{kroneckersumBlockMatrix}
+#' 
+#' @details if \code{x} and \code{y} have the same block sizes, the crossprod function
+#' calculates the crossproduct of each block separately
+#' 
 setMethod("crossprod", signature(x="bdMatrix", y="kroneckersumBlockMatrix"),
           function(x, y) {
             
@@ -15,7 +23,14 @@ setMethod("crossprod", signature(x="bdMatrix", y="kroneckersumBlockMatrix"),
             
           } )
 
-
+#' Function to sum a bdMatrix and a kroneckersumBlockMatrix
+#' 
+#' @param e1 object of class \code{bdMatrix}
+#' @param e2 object of class \code{kroneckersumBlockMatrix}
+#' 
+#' @details \code{x} and \code{y} must have the same number of blocks
+#' WARNING: Sizes of blocks are not checked. This can lead to unwanted results.
+#' 
 setMethod("+", signature(e1="bdMatrix", e2="kroneckersumBlockMatrix"),
           function(e1, e2) {
             
@@ -29,6 +44,14 @@ setMethod("+", signature(e1="bdMatrix", e2="kroneckersumBlockMatrix"),
           } )
 
 
+#' Matrix multiplication function for a rowtensorBlockMatrix and a bdMatrix
+#' 
+#' @param x object of class \code{bdMatrix}
+#' @param y object of class \code{kroneckersumBlockMatrix}
+#' 
+#' @details if \code{x} and \code{y} have the same block sizes, the function
+#' calculates the ordinary matrix product of each block separately
+#' 
 setMethod("%*%", signature(x="rowtensorBlockMatrix", y="bdMatrix"),
           function(x, y) {
             

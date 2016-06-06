@@ -6,5 +6,4 @@ This R package makes use of block-wise matrix structures linked to row-wise tens
 
 ## Installation
 
-`install_github("davidruegamer/effortless", 
-auth_token = "b1fc049ddcdb44ac05c6dc722fc0830dd2922a8b")`
+`install_github("davidruegamer/effortless")`

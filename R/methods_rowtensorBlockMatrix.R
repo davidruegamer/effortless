@@ -140,36 +140,39 @@ setMethod("max", c("rowtensorBlockMatrix"),
             
           })
 
-# setGeneric("rankMatrix", Matrix::rankMatrix)
-
-# setMethod("rankMatrix", signature(x = "rowtensorBlockMatrix"),
-#           function(x, method, warn.t)
-#           {
-#             message("Ignoring all arguments but x in rankMatrix call.")
-#             ncol(x@matLeft) * rankMatrix(x = x@matRight, method = method, warn.t = warn.t)
-#             
-#           }
-# )
-
-## just overwrite rankMatrix
+#' @export
+setGeneric("rankMatrix", Matrix::rankMatrix)
 
 #' rankMatrix extension for rowtensorBlockMatrix objects
 #' 
 #' @param x object of class rowtensorBlockMatrix or a numeric matrix
-#' @param ... further arguments passed to \code{Matrix::rankMatrix}
+#' @param method see \code{Matrix::rankMatrix}
+#' @param warn.t see \code{Matrix::rankMatrix}
 #' @details if x is a numeric matrix \code{Matrix::rankMatrix} is called on x. Else the rank is computed
 #' as product of number of colums of the \code{matLeft}-slot and the rank of the \code{matRight}-slot,
 #' which is also calculated via Matrix::rankMatrix
 #' 
 #' @export
-rankMatrix <- function(x, ...)
-{
-  
-  if(inherits(x, "Matrix") | is.matrix(x)) 
-    Matrix::rankMatrix(x, ...) else 
-      ncol(x@matLeft) * Matrix::rankMatrix(x = x@matRight, ...)
-  
-}
+setMethod("rankMatrix", signature(x = "rowtensorBlockMatrix"),
+          function(x, method, warn.t)
+          {
+            message("Ignoring all arguments but x in rankMatrix call.")
+            ncol(x@matLeft) * rankMatrix(x = x@matRight, method = method, warn.t = warn.t)
+
+          }
+)
+
+## just overwrite rankMatrix
+
+
+# rankMatrix <- function(x, ...)
+# {
+#   
+#   if(inherits(x, "Matrix") | is.matrix(x)) 
+#     Matrix::rankMatrix(x, ...) else 
+#       ncol(x@matLeft) * Matrix::rankMatrix(x = x@matRight, ...)
+#   
+# }
 
 # svd.rowtensorBlockMatrix <- function(x, nu = min(nrow(x), p = ncol(x)), nv = min(nrow(x), p = ncol(x))) {
 #   

@@ -140,39 +140,45 @@ setMethod("max", c("rowtensorBlockMatrix"),
             
           })
 
+# 
+# setGeneric("rankMatrix", Matrix::rankMatrix)
+# 
+# 
+# setMethod("rankMatrix", signature(x = "rowtensorBlockMatrix"),
+#           function(x, method, warn.t)
+#           {
+#             message("Ignoring all arguments but x in rankMatrix call.")
+#             ncol(x@matLeft) * rankMatrix(x = x@matRight, method = method, warn.t = warn.t)
+# 
+#           }
+# )
+
+## just overwrite rankMatrix
+
+#' Original rankMatrix function from the Matrix package
 #' @export
-setGeneric("rankMatrix", Matrix::rankMatrix)
+rankMatrixMatrix <- Matrix::rankMatrix
 
 #' rankMatrix extension for rowtensorBlockMatrix objects
 #' 
 #' @param x object of class rowtensorBlockMatrix or a numeric matrix
-#' @param method see \code{Matrix::rankMatrix}
-#' @param warn.t see \code{Matrix::rankMatrix}
-#' @details if x is a numeric matrix \code{Matrix::rankMatrix} is called on x. Else the rank is computed
-#' as product of number of colums of the \code{matLeft}-slot and the rank of the \code{matRight}-slot,
-#' which is also calculated via Matrix::rankMatrix
+#' @param ... further arguments passed to \code{rankMatrixMatrix}, which is the original \code{Matrix::rankMatrix} function
+
+#' @details if x is a numeric matrix the original \code{Matrix::rankMatrix} is called on x. 
+#' Else the rank is computed #' as product of number of colums of the \code{matLeft}-slot and 
+#' the rank of the \code{matRight}-slot, which is also calculated via \code{Matrix::rankMatrix}
 #' 
 #' @export
-setMethod("rankMatrix", signature(x = "rowtensorBlockMatrix"),
-          function(x, method, warn.t)
-          {
-            message("Ignoring all arguments but x in rankMatrix call.")
-            ncol(x@matLeft) * rankMatrix(x = x@matRight, method = method, warn.t = warn.t)
+rankMatrix <- function(x, ...)
+{
 
-          }
-)
+  if(inherits(x, "Matrix") | is.matrix(x))
+    rankMatrixMatrix(x, ...) else
+      ncol(x@matLeft) * Matrix::rankMatrix(x = x@matRight, ...)
 
-## just overwrite rankMatrix
+}
 
-
-# rankMatrix <- function(x, ...)
-# {
-#   
-#   if(inherits(x, "Matrix") | is.matrix(x)) 
-#     Matrix::rankMatrix(x, ...) else 
-#       ncol(x@matLeft) * Matrix::rankMatrix(x = x@matRight, ...)
-#   
-# }
+assignInNamespace("rankMatrix", rankMatrix, ns="Matrix")
 
 # svd.rowtensorBlockMatrix <- function(x, nu = min(nrow(x), p = ncol(x)), nv = min(nrow(x), p = ncol(x))) {
 #   

@@ -9,14 +9,14 @@ rankMatrix(x, ...)
 \arguments{
 \item{x}{object of class rowtensorBlockMatrix or a numeric matrix}
 
-\item{...}{further arguments passed to \code{Matrix::rankMatrix}}
+\item{...}{further arguments passed to \code{rankMatrixMatrix}, which is the original \code{Matrix::rankMatrix} function}
 }
 \description{
 rankMatrix extension for rowtensorBlockMatrix objects
 }
 \details{
-if x is a numeric matrix \code{Matrix::rankMatrix} is called on x. Else the rank is computed
-as product of number of colums of the \code{matLeft}-slot and the rank of the \code{matRight}-slot,
-which is also calculated via Matrix::rankMatrix
+if x is a numeric matrix the original \code{Matrix::rankMatrix} is called on x. 
+Else the rank is computed #' as product of number of colums of the \code{matLeft}-slot and 
+the rank of the \code{matRight}-slot, which is also calculated via \code{Matrix::rankMatrix}
 }
 

@@ -155,10 +155,6 @@ setMethod("max", c("rowtensorBlockMatrix"),
 
 ## just overwrite rankMatrix
 
-#' Original rankMatrix function from the Matrix package
-#' @export
-rankMatrixMatrix <- Matrix::rankMatrix
-
 #' rankMatrix extension for rowtensorBlockMatrix objects
 #' 
 #' @param x object of class rowtensorBlockMatrix or a numeric matrix
@@ -173,12 +169,10 @@ rankMatrix <- function(x, ...)
 {
 
   if(inherits(x, "Matrix") | is.matrix(x))
-    rankMatrixMatrix(x, ...) else
+    Matrix::rankMatrix(x, ...) else
       ncol(x@matLeft) * Matrix::rankMatrix(x = x@matRight, ...)
 
 }
-
-assignInNamespace("rankMatrix", rankMatrix, ns="Matrix")
 
 # svd.rowtensorBlockMatrix <- function(x, nu = min(nrow(x), p = ncol(x)), nv = min(nrow(x), p = ncol(x))) {
 #   

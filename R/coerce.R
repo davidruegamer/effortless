@@ -1,5 +1,6 @@
 ### bdMatrix
 
+#' @export
 setAs(from = "list", 
       to = "bdMatrix", 
       def = function(from) {
@@ -20,6 +21,9 @@ setAs(from = "bdMatrix",
 #' @param x object of class bdMatrix
 #' @param mode see \code{?as.vector}
 #' 
+#' @method as.vector bdMatrix
+#' 
+#' @export
 as.vector.bdMatrix <- function(x, mode) as(x, "vector")
 
 setAs(from = "Matrix", 

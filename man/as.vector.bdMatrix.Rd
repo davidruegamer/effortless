@@ -4,7 +4,7 @@
 \alias{as.vector.bdMatrix}
 \title{Coerce bdMatrix to vector}
 \usage{
-as.vector.bdMatrix(x, mode)
+\method{as.vector}{bdMatrix}(x, mode)
 }
 \arguments{
 \item{x}{object of class bdMatrix}
